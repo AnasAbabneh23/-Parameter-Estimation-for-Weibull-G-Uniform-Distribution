@@ -1,0 +1,19 @@
+n=30
+ alpha <- 1.8
+ beta <- 1.2
+ theta <- 1
+    u <- runif(n,0,1)
+T=(log((1/(1-u))^(1/(alpha))))^(1/(beta))
+Y=T/(T+1)
+    a=(theta)*Y
+a
+library("maxLik")
+ logLikFun <- function(param){ 
+ alpha=param[1]
+  beta=param[2]
+  theta=param[3]
+    f1=((alpha)*(beta)*(theta)/((theta-a)^(2))*(a/(theta-a))^(beta-1)*exp(-alpha*((a/(theta-a))^(beta))))
+    sum(f1,log=TRUE)
+    }
+    mle <- maxLik(logLik = logLikFun, start = c(alpha=1.8,beta=1.2,theta=1),method = "BFGS")
+ summary(mle)
